@@ -1,3 +1,7 @@
 @import 'antd/dist/antd.css';
 
-@import '../public/sass/variables';
+// @import '../public/sass/parts/variables';
+// @import '../public/sass/parts/reset';
+
+@import '../public/sass/components/card';
+@import '../public/sass/components/detail';
