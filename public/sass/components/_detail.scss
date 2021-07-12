@@ -1,0 +1,56 @@
+.wrapper-event {
+    padding-top: 35px;
+    .event__title {
+        h1 {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+    }
+
+    .event__image {
+        img {
+            width: 100%;
+            margin: 25px 0;
+        }
+    }
+
+    .event__lead-text {
+        p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .event__description {
+        p {
+            font-size: 15px;
+        }
+    }
+}
+
+.wrapper-informations {
+    padding-left: 50px;
+    padding-top: 35px;
+    button {
+        margin-bottom: 20px;
+    }
+
+    .container {
+        margin-bottom: 15px;
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+    }
+
+    .informations__price {
+    }
+
+    .informations__to-go {
+        .adress {
+            margin-bottom: 0;
+        }
+    }
+}
