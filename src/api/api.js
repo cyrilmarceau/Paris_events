@@ -62,18 +62,6 @@ const that = {
                 })
         })
     },
-    setLs(id, value) {
-        // let checkIfExist = localStorage.getItem(id)
-        // if (!_.isNil(checkIfExist)) {
-        // }
-        localStorage.setItem(id, value)
-    },
-    getLs(key) {
-        localStorage.getItem(`${key}`)
-    },
-    removeLs(id) {
-        sessionStorage.removeItem(id)
-    },
     // createRoute(url, values) {
     //     let api = that.getAxiosInstence()
 
@@ -123,15 +111,31 @@ const that = {
     getLastFromDate(params) {
         return that.showRoute(`${PUBLIC_ROUTE}/records/`, params)
     },
-
     getEventById(id) {
         return that.showRoute(`${PUBLIC_ROUTE}/records/${id}/`)
     },
 
+    getEventBySearch(params) {
+        return that.showRoute(`${PUBLIC_ROUTE}/records/`, params)
+    },
+
+    setLs(array) {
+        return localStorage.setItem('favorites', array)
+    },
+    getLs(lsKey) {
+        let ls = localStorage.getItem(lsKey)
+        return JSON.parse(ls)
+    },
+    removeLs(lsKey) {
+        return localStorage.getItem(lsKey)
+    },
+
     /* Query builder */
     query: {
-        search(params, value = '') {
-            if (!_.isEmpty(value)) params.search = value
+        search(params, fieldName = '', value = '' || []) {
+            if (!_.isEmpty(value)) {
+                params[fieldName] = value
+            }
 
             return params
         },

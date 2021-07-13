@@ -1,0 +1,9 @@
+[
+    {
+        "type": "text",
+        "displayLabel": false,
+        "key": "search",
+        "label": "Nom de l'événement",
+        "rules": [{ "required": true, "message": "Veuillez remplir le champ nom" }]
+    }
+]

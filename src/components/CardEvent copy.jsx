@@ -17,52 +17,58 @@ const CardEvent = ({ events }) => {
     const [fav, setFav] = useState([])
 
     const editFavorite = (el) => {
-        let valueLs
+        // setLocalStorageItem((localStorageItem) => [...localStorageItem, el.record])
+        let a
         let newVal = {}
 
         // Check if ID exist in the localStorage
         let ls = Api.getLs('favorites')
         if (!_.isEmpty(ls)) {
-            valueLs = ls
-            // Get the current localStorage in new array
             ls.map((elLs, i) => {
                 if (elLs.evID !== el.record.id) {
+                    a = []
                     // console.log('pas encore rajouter')
-                    console.log('A before new val', valueLs)
-
-                    // Format new result
-                    console.log('EL COUNT ---', el)
+                    a.push(ls)
                     newVal = el.record.fields
                     newVal.evID = el.record.id
-                    valueLs.push(newVal)
-
-                    console.log('A after new val', valueLs)
-
-                    Api.setLs(JSON.stringify(valueLs))
+                    a.push(newVal)
+                    Api.setLs(JSON.stringify(a))
                 } else {
-                    // Remove the good index from localStorage
-                    valueLs.splice(i, 1)
+                    a = []
+                    a.push(ls)
+                    a.splice(i, 1)
 
-                    Api.setLs(JSON.stringify(valueLs))
+                    Api.setLs(JSON.stringify(a))
                     console.log('déjà ajouter')
                 }
             })
         } else {
-            valueLs = []
-
+            a = []
             newVal = el.record.fields
             newVal.evID = el.record.id
-            valueLs.push(newVal)
-
-            Api.setLs(JSON.stringify(valueLs))
+            a.push(newVal)
+            Api.setLs(JSON.stringify(a))
         }
+
+        // Api.setLs(JSON.stringify(newVal))
+        // let ls = Api.getLs('favorites')
+        // _.find(ls, function (o) {
+        //     if (o.evID !== el.record.id) {
+        //         console.log(o)
+        //     } else {
+        //         setFav((fav) => [...fav, newVal])
+        //     }
+        // })
     }
 
     useEffect(() => {
         let ls = Api.getLs('favorites')
+        // Create default array with empty value in local storage if we don't have value
         if (!_.isEmpty(ls)) {
             setLocalStorageItem((localStorageItem) => [...localStorageItem, ls])
             // Api.setLs(JSON.stringify([]))
+        } else {
+            // Set value in array
         }
 
         return () => {}

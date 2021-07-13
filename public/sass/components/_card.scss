@@ -1,3 +1,23 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .ant-card {
+        margin: 25px auto;
+    }
+    .ant-card-cover {
+        a {
+            max-height: 270px;
+            overflow: hidden;
+            img {
+                width: 100%;
+                object-position: 50% 0%;
+                object-fit: none;
+            }
+        }
+    }
+}
+
 .card-date {
     margin-top: 15px;
     font-size: 18px;

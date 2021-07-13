@@ -29,7 +29,7 @@ const App = () => {
                         <Route path="/event/:id" component={Detail} />
                     </Switch>
                 </Content>
-                <FooterLayout />
+                {/* <FooterLayout /> */}
             </Layout>
         </Router>
     )

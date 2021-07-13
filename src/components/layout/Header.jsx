@@ -21,7 +21,7 @@ const HeaderLayout = () => {
     ]
     return (
         <Header>
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['0']}>
+            <Menu theme="dark" mode="horizontal">
                 {menu.map((el, i) => {
                     return (
                         <Menu.Item key={i} icon={el.icon}>

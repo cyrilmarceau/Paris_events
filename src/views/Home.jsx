@@ -42,7 +42,7 @@ const Home = () => {
     }
     return (
         <>
-            <h1>Bienvenue sur le site de Paris event</h1>
+            <h1 className="home-title">Bienvenue sur le site de Paris event</h1>
             <CardsEvent events={state.events} />
         </>
     )
