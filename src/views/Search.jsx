@@ -19,6 +19,7 @@ const Search = () => {
         },
         events: [],
     })
+    const [events, setEvent] = useState([])
 
     const [form] = Form.useForm()
 
@@ -37,7 +38,8 @@ const Search = () => {
             params = Api.query.search(params, 'search', state.filters.search)
 
             let res = await Api.getEventBySearch(params)
-
+            console.log()
+            // setEvent((events) => [...events, res])
             setState({ ...state, events: res.records })
         } catch (e) {
             console.log(e)

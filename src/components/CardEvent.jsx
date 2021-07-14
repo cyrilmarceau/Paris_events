@@ -13,8 +13,7 @@ import Api from '../api/api'
 const { Meta } = Card
 
 const CardEvent = ({ events }) => {
-    const [localStorageItem, setLocalStorageItem] = useState([])
-    const [fav, setFav] = useState([])
+    const [evID, setEvID] = useState([])
 
     const editFavorite = (el) => {
         let valueLs
@@ -23,37 +22,38 @@ const CardEvent = ({ events }) => {
         // Check if ID exist in the localStorage
         let ls = Api.getLs('favorites')
         if (!_.isEmpty(ls)) {
-            valueLs = ls
-            // Get the current localStorage in new array
             ls.map((elLs, i) => {
-                if (elLs.evID !== el.record.id) {
-                    // console.log('pas encore rajouter')
-                    console.log('A before new val', valueLs)
+                if (elLs.evID === el.record.id) {
+                    console.log('SPLICE')
+                    // Remove item from localStorage
+                    ls.splice(i, 1)
+                    setEvID(evID.filter((id) => id !== elLs.evID))
+                    // Set new value to the state
+                    Api.setLs(JSON.stringify(ls))
+                } else {
+                    valueLs = []
 
-                    // Format new result
-                    console.log('EL COUNT ---', el)
+                    ls.map((el) => valueLs.push(el))
+
                     newVal = el.record.fields
                     newVal.evID = el.record.id
+                    if (evID.indexOf(el.record.id) === -1) {
+                        setEvID((evID) => [...evID, el.record.id])
+                        console.log('PUSH')
+                    }
                     valueLs.push(newVal)
-
-                    console.log('A after new val', valueLs)
-
                     Api.setLs(JSON.stringify(valueLs))
-                } else {
-                    // Remove the good index from localStorage
-                    valueLs.splice(i, 1)
-
-                    Api.setLs(JSON.stringify(valueLs))
-                    console.log('déjà ajouter')
                 }
             })
         } else {
+            console.log('ADD IF EMPTY')
             valueLs = []
 
             newVal = el.record.fields
             newVal.evID = el.record.id
             valueLs.push(newVal)
 
+            setEvID((evID) => [...evID, el.record.id])
             Api.setLs(JSON.stringify(valueLs))
         }
     }
@@ -61,12 +61,19 @@ const CardEvent = ({ events }) => {
     useEffect(() => {
         let ls = Api.getLs('favorites')
         if (!_.isEmpty(ls)) {
-            setLocalStorageItem((localStorageItem) => [...localStorageItem, ls])
-            // Api.setLs(JSON.stringify([]))
+            ls.map((el) => {
+                setEvID((evID) => [...evID, el.evID])
+            })
         }
-
-        return () => {}
     }, [])
+
+    // useEffect(() => {
+    //     localStorageItem.map((el) => {
+    //         console.log(el)
+    //         setEvID((evID) => [...evID, el.evID])
+    //     })
+    //     return () => {}
+    // }, [localStorageItem])
 
     return (
         <div className="card-container">
@@ -93,10 +100,9 @@ const CardEvent = ({ events }) => {
                         <Button
                             onClick={() => editFavorite(el)}
                             // type="primary"
-                            // icon={
                             // id.includes(el.record.id) ? <HeartFilled /> : <HeartOutlined />
-                            // }
-                            // className={id.includes(el.record.id) ? 'is-favorite' : ''}
+                            icon={evID.includes(el.record.id) ? <HeartFilled /> : <HeartOutlined />}
+                            className={evID.includes(el.record.id) ? 'is-favorite' : ''}
                         >
                             Enregistrer
                         </Button>
