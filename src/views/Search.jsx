@@ -19,27 +19,22 @@ const Search = () => {
         },
         events: [],
     })
-    const [events, setEvent] = useState([])
 
     const [form] = Form.useForm()
 
     const formRef = React.createRef()
 
     useEffect(() => {
-        if (state.filters.search !== '') {
-            searchEvent()
-        }
-        return () => {}
+        searchEvent()
     }, [state.filters.search])
 
     const searchEvent = async () => {
         try {
             let params = {}
-            params = Api.query.search(params, 'search', state.filters.search)
+
+            params = Api.query.search(params, state.filters.search)
 
             let res = await Api.getEventBySearch(params)
-            console.log()
-            // setEvent((events) => [...events, res])
             setState({ ...state, events: res.records })
         } catch (e) {
             console.log(e)
@@ -54,6 +49,8 @@ const Search = () => {
                 ...allValues,
             },
         })
+
+        console.log('MISE À JOURS')
     }
 
     return (

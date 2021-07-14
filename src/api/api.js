@@ -132,9 +132,9 @@ const that = {
 
     /* Query builder */
     query: {
-        search(params, fieldName = '', value = '' || []) {
+        search(params, value = '') {
             if (!_.isEmpty(value)) {
-                params[fieldName] = value
+                params.search = value
             }
 
             return params
