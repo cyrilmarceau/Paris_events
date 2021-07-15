@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
-import FormBuilder from '../components/formBuilder/main'
+import { Form, BackTop, Button, Empty } from 'antd'
 
-import { Form } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
 
 import _ from 'lodash'
+
+import FormBuilder from '../components/formBuilder/main'
 
 import fields from '../fields/search.json'
 
@@ -18,15 +20,12 @@ const Search = () => {
             search: '',
         },
         events: [],
+        error: false,
     })
 
     const [form] = Form.useForm()
 
     const formRef = React.createRef()
-
-    useEffect(() => {
-        searchEvent()
-    }, [state.filters.search])
 
     const searchEvent = async () => {
         try {
@@ -34,8 +33,14 @@ const Search = () => {
 
             params = Api.query.search(params, state.filters.search)
 
-            let res = await Api.getEventBySearch(params)
-            setState({ ...state, events: res.records })
+            let res
+            if (!_.isEmpty(state.filters.search)) {
+                res = await Api.getEventBySearch(params)
+            }
+
+            _.isEmpty(res.records)
+                ? setState({ ...state, error: true })
+                : setState({ ...state, events: res.records, error: false })
         } catch (e) {
             console.log(e)
         }
@@ -49,8 +54,6 @@ const Search = () => {
                 ...allValues,
             },
         })
-
-        console.log('MISE À JOURS')
     }
 
     return (
@@ -60,11 +63,21 @@ const Search = () => {
                 ref={formRef}
                 onValuesChange={FiltersEvent}
                 className="pe-form-list-search-event"
+                onFinish={searchEvent}
             >
                 <FormBuilder fieldsList={fields} className="search-event__fields" />
+                <Button type="primary" icon={<SearchOutlined />} htmlType="submit">
+                    Rechercher
+                </Button>
             </Form>
 
-            <CardsEvent events={state.events} />
+            <div className="search-result">
+                <h1>Résultat de la recherche</h1>
+                {state.error && <Empty />}
+
+                <CardsEvent events={state.events} />
+                <BackTop />
+            </div>
         </>
     )
 }

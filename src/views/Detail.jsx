@@ -36,7 +36,7 @@ const Detail = () => {
         <Row>
             {state.event.map((el, i) => {
                 return (
-                    <>
+                    <React.Fragment key={i}>
                         <Col md={12}>
                             <div className="wrapper-event">
                                 <div className="event__title">
@@ -91,7 +91,7 @@ const Detail = () => {
                             </div>
                             <div className="more-informations"></div>
                         </Col>
-                    </>
+                    </React.Fragment>
                 )
             })}
         </Row>

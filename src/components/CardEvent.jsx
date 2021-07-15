@@ -22,40 +22,30 @@ const CardEvent = ({ events }) => {
     const editFavorite = (el) => {
         let valueLs
         let newVal = {}
-
-        // Check if we have item in localStorage
         let ls = Api.getLs('favorites')
         if (!_.isEmpty(ls)) {
-            ls.map((elLs, i) => {
-                if (elLs.evID === el.record.id) {
-                    // Remove item in LS if exist
-                    ls.splice(i, 1)
+            const eventIndexFound = ls.findIndex((e) => e.evID === el.record.id)
 
-                    // Filter state with id for change icon
-                    setEvID(evID.filter((id) => id !== elLs.evID))
+            if (eventIndexFound > -1) {
+                const eventFound = ls.find((e) => e.evID === el.record.id)
+                // Remove item in LS if exist
+                ls.splice(eventIndexFound, 1)
 
-                    // Set new value to the LS
-                    Api.setLs(JSON.stringify(ls))
-                } else {
-                    // Remove item if exist
-                    valueLs = []
+                setEvID(evID.filter((id) => id !== eventFound.evID))
+                // Set new value to the LS
+                Api.setLs(ls)
+            } else {
+                newVal = el.record.fields
+                newVal.evID = el.record.id
 
-                    ls.map((el) => valueLs.push(el))
+                // Check if ID not exist in state
+                if (evID.indexOf(el.record.id) === -1) setEvID((evID) => [...evID, el.record.id])
 
-                    newVal = el.record.fields
-                    newVal.evID = el.record.id
+                ls.push(newVal)
 
-                    // Check if ID not exist in state
-                    if (evID.indexOf(el.record.id) === -1) {
-                        setEvID((evID) => [...evID, el.record.id])
-                    }
-
-                    valueLs.push(newVal)
-                    Api.setLs(JSON.stringify(valueLs))
-                }
-            })
+                Api.setLs(ls)
+            }
         } else {
-            // Add item if LS have 0 item
             valueLs = []
 
             newVal = el.record.fields
@@ -63,7 +53,7 @@ const CardEvent = ({ events }) => {
             valueLs.push(newVal)
 
             setEvID((evID) => [...evID, el.record.id])
-            Api.setLs(JSON.stringify(valueLs))
+            Api.setLs(valueLs)
         }
     }
 
@@ -84,6 +74,7 @@ const CardEvent = ({ events }) => {
             renderCard.push(
                 evID.includes(el.record.id) ? (
                     <Card
+                        className="card-content"
                         key={i}
                         hoverable
                         style={{ width: 550 }}

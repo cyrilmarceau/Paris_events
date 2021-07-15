@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
-import Api from '../api/api'
+import { BackTop, Empty } from 'antd'
 
 import _ from 'lodash'
 
+import Api from '../api/api'
+
 import CardsEvent from '../components/CardEvent'
-
-// 0:{links: Array(3), record: {…}}
-
-// links:[{…}, {…}, {…}]
-
-// record: {fields: {…}, id: "1d7daff17147311f3c78901ac152c18a…}
 
 const Favorites = () => {
     const [state, setState] = useState({
@@ -23,16 +19,19 @@ const Favorites = () => {
         let newS = _.cloneDeep(state)
 
         let record = []
-        ls.map((el, i) => {
-            let newFormat = { record: {} }
-            newFormat.record.id = el.evID
 
-            newFormat.record.fields = el
-            record.push(newFormat)
-        })
-        newS.events = record
+        if (!_.isNil(ls)) {
+            ls.map((el, i) => {
+                let newFormat = { record: {} }
+                newFormat.record.id = el.evID
 
-        setState(newS)
+                newFormat.record.fields = el
+                record.push(newFormat)
+            })
+            newS.events = record
+
+            setState(newS)
+        }
     }
 
     useEffect(() => {
@@ -42,7 +41,9 @@ const Favorites = () => {
 
     return (
         <>
-            <CardsEvent events={state.events} />
+            {_.isEmpty(state.events) ? <Empty /> : <CardsEvent events={state.events} />}
+
+            <BackTop />
         </>
     )
 }

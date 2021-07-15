@@ -16,29 +16,6 @@ const that = {
             // timeout: 1000,
         })
     },
-
-    // listRoute(url, extraParams = {}) {
-    //     let api = that.getAxiosInstence()
-
-    //     return new Promise((resolve, reject) => {
-    //         api.get(url, { params: extraParams })
-    //             .then((apiResp) => {
-    //                 let res = apiResp.data
-    //                 resolve(res)
-    //             })
-    //             .catch((err) => {
-    //                 if (
-    //                     !_.isNil(err.response) &&
-    //                     !_.isNil(err.response.status) &&
-    //                     err.response.status === 422
-    //                 ) {
-    //                     message.error('Une erreur est survenue.')
-    //                 }
-
-    //                 reject(err)
-    //             })
-    //     })
-    // },
     showRoute(url, extraParams = {}) {
         let api = that.getAxiosInstence()
 
@@ -62,51 +39,6 @@ const that = {
                 })
         })
     },
-    // createRoute(url, values) {
-    //     let api = that.getAxiosInstence()
-
-    //     return new Promise((resolve, reject) => {
-    //         api.post(url, values)
-    //             .then((apiResp) => {
-    //                 let res = apiResp.data
-    //                 resolve(res)
-    //             })
-    //             .catch((err) => {
-    //                 message.error('Création impossible.')
-    //                 reject(err)
-    //             })
-    //     })
-    // },
-    // updateRoute(url, values) {
-    //     let api = that.getAxiosInstence()
-
-    //     return new Promise((resolve, reject) => {
-    //         api.patch(url, values)
-    //             .then((apiResp) => {
-    //                 let res = apiResp.data
-
-    //                 resolve(res)
-    //             })
-    //             .catch((err) => {
-    //                 message.error('Enregistrement impossible.')
-    //                 reject(err)
-    //             })
-    //     })
-    // },
-    // deleteRoute(url, extraParams = {}, extraData = {}) {
-    //     let api = that.getAxiosInstence()
-
-    //     return new Promise((resolve, reject) => {
-    //         api.delete(url, { params: extraParams, data: extraData })
-    //             .then((apiResp) => {
-    //                 resolve('ok')
-    //             })
-    //             .catch((err) => {
-    //                 message.error('Suppression impossible.')
-    //                 reject(err)
-    //             })
-    //     })
-    // },
 
     getLastFromDate(params) {
         return that.showRoute(`${PUBLIC_ROUTE}/records/`, params)
@@ -119,8 +51,8 @@ const that = {
         return that.showRoute(`${PUBLIC_ROUTE}/records/`, params)
     },
 
-    setLs(array) {
-        return localStorage.setItem('favorites', array)
+    setLs(data) {
+        return localStorage.setItem('favorites', JSON.stringify(data))
     },
     getLs(lsKey) {
         let ls = localStorage.getItem(lsKey)
