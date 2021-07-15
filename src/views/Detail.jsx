@@ -18,6 +18,56 @@ const Detail = () => {
         event: [],
     })
 
+    const [evID, setEvID] = useState([])
+
+    const editFavorite = (el) => {
+        let valueLs
+        let newVal = {}
+        let ls = Api.getLs('favorites')
+        if (!_.isEmpty(ls)) {
+            const eventIndexFound = ls.findIndex((e) => e.evID === el.record.id)
+
+            if (eventIndexFound > -1) {
+                const eventFound = ls.find((e) => e.evID === el.record.id)
+                // Remove item in LS if exist
+                ls.splice(eventIndexFound, 1)
+
+                setEvID(evID.filter((id) => id !== eventFound.evID))
+                // Set new value to the LS
+                Api.setLs(ls)
+            } else {
+                newVal = el.record.fields
+                newVal.evID = el.record.id
+
+                // Check if ID not exist in state
+                if (evID.indexOf(el.record.id) === -1) setEvID((evID) => [...evID, el.record.id])
+
+                ls.push(newVal)
+
+                Api.setLs(ls)
+            }
+        } else {
+            valueLs = []
+
+            newVal = el.record.fields
+            newVal.evID = el.record.id
+            valueLs.push(newVal)
+
+            setEvID((evID) => [...evID, el.record.id])
+            Api.setLs(valueLs)
+        }
+    }
+
+    useEffect(() => {
+        // Get default item in ls if he is not empty
+        let ls = Api.getLs('favorites')
+        if (!_.isEmpty(ls)) {
+            ls.map((el) => {
+                setEvID((evID) => [...evID, el.evID])
+            })
+        }
+    }, [])
+
     useEffect(() => {
         fetchEvent()
         return () => {}
@@ -33,42 +83,43 @@ const Detail = () => {
     }
 
     return (
-        <Row>
+        <Row gutter={{ xs: 8, sm: 16, md: 60 }}>
             {state.event.map((el, i) => {
                 return (
                     <React.Fragment key={i}>
-                        <Col md={12}>
-                            <div className="wrapper-event">
-                                <div className="event__title">
-                                    <h1 className="">{el.record.fields.title}</h1>
-                                    <h2>{el.record.fields.contact_name}</h2>
-                                </div>
-                                <div className="event__image">
-                                    <img
-                                        src={el.record.fields.cover_url}
-                                        alt="Fond de l'événement"
-                                    />
-                                </div>
-
-                                <div className="event__lead-text">
-                                    <p>{el.record.fields.lead_text}</p>
-                                </div>
-                                <div className="event__description">
-                                    <p>{Api.removeHTMLTag(el.record.fields.description)}</p>
-                                </div>
+                        {/* <div className="wrapper-event"> */}
+                        <Col md={24} className="event-container-title">
+                            <div className="event__title">
+                                <h1 className="">{el.record.fields.title}</h1>
+                                <h2>{el.record.fields.contact_name}</h2>
                             </div>
                         </Col>
-                        <Col md={12} className="wrapper-informations">
+
+                        <Col md={12} className="event-content">
+                            <div className="event__image">
+                                <img src={el.record.fields.cover_url} alt="Fond de l'événement" />
+                            </div>
+
+                            <div className="event__lead-text">
+                                <p>{el.record.fields.lead_text}</p>
+                            </div>
+                            <div className="event__description">
+                                <p>{Api.removeHTMLTag(el.record.fields.description)}</p>
+                            </div>
+                        </Col>
+                        <Col md={12} className="event-informations">
                             <Button
-                                // onClick={() => addToFavorite(el.record.id)}
-                                // type="primary"
+                                onClick={() => editFavorite(el)}
                                 icon={
-                                    state.id == el.record.id ? <HeartFilled /> : <HeartOutlined />
+                                    evID.includes(el.record.id) ? (
+                                        <HeartFilled />
+                                    ) : (
+                                        <HeartOutlined />
+                                    )
                                 }
-                                className={state.id === el.record.id ? 'is-favorite' : ''}
+                                className={evID.includes(el.record.id) ? 'is-favorite' : ''}
                             >
-                                {console.log(state.id, el.record.fields)}
-                                Sauvegarder
+                                Enregistrer
                             </Button>
                             <div className="container informations__date">
                                 <p className="title">Dates:</p>
@@ -91,6 +142,7 @@ const Detail = () => {
                             </div>
                             <div className="more-informations"></div>
                         </Col>
+                        {/* </div> */}
                     </React.Fragment>
                 )
             })}

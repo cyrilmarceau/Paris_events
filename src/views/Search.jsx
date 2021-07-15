@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Form, BackTop, Button, Empty } from 'antd'
+import { Form, BackTop, Button, Empty, Pagination } from 'antd'
 
 import { SearchOutlined } from '@ant-design/icons'
 
@@ -19,6 +19,12 @@ const Search = () => {
         filters: {
             search: '',
         },
+        pagination: {
+            current: 0,
+            offset: 0,
+            pageSize: 10,
+            total: 0,
+        },
         events: [],
         error: false,
     })
@@ -36,11 +42,20 @@ const Search = () => {
             let res
             if (!_.isEmpty(state.filters.search)) {
                 res = await Api.getEventBySearch(params)
+                console.log(res)
             }
 
             _.isEmpty(res.records)
-                ? setState({ ...state, error: true })
-                : setState({ ...state, events: res.records, error: false })
+                ? setState({ ...state, events: [], error: true })
+                : setState({
+                      ...state,
+                      events: res.records,
+                      error: false,
+                      pagination: {
+                          ...state.pagination,
+                          total: res.total_count,
+                      },
+                  })
         } catch (e) {
             console.log(e)
         }
@@ -58,6 +73,7 @@ const Search = () => {
 
     return (
         <>
+            <h1 className="search-title">Faite une recherche sur les événements à Paris</h1>
             <Form
                 form={form}
                 ref={formRef}
@@ -71,13 +87,16 @@ const Search = () => {
                 </Button>
             </Form>
 
-            <div className="search-result">
-                <h1>Résultat de la recherche</h1>
-                {state.error && <Empty />}
+            {state.error && <Empty />}
 
-                <CardsEvent events={state.events} />
-                <BackTop />
-            </div>
+            {!_.isEmpty(state.events) ? (
+                <div className="search-result">
+                    <h1>Résultat de la recherche</h1>
+
+                    <CardsEvent events={state.events} />
+                    <BackTop />
+                </div>
+            ) : null}
         </>
     )
 }

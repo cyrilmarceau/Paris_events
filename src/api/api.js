@@ -13,7 +13,7 @@ const that = {
         return axios.create({
             baseURL: 'https://opendata.paris.fr',
             headers: reqHeaders,
-            // timeout: 1000,
+            timeout: 1000,
         })
     },
     showRoute(url, extraParams = {}) {
@@ -82,8 +82,10 @@ const that = {
             return params
         },
         pagination(params, pagination) {
+            // console.log(pagination)
             // params.page = pagination.current || 1
             params.limit = pagination.pageSize
+            params.offset = pagination.offset
 
             return params
         },
