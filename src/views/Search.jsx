@@ -75,7 +75,7 @@ const Search = () => {
     return (
         <>
             <Helmet>
-                <title>Favoris</title>
+                <title>Recherche</title>
             </Helmet>
             <h1 className="search-title">Faite une recherche sur les événements à Paris</h1>
             <Form

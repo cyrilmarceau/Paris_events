@@ -75,10 +75,18 @@ const CardEvent = ({ events }) => {
                         className="card-content"
                         key={i}
                         hoverable
-                        style={{ width: 550 }}
                         cover={
                             <Link key={i} to={`/event/${el.record.id}`}>
-                                <img alt="example" src={el.record.fields.cover_url} />{' '}
+                                {/* <img
+                                    alt={el.record.fields.cover_alt}
+                                    src={el.record.fields.cover_url}
+                                /> */}
+                                <div
+                                    className="img-event"
+                                    style={{
+                                        backgroundImage: `url(${el.record.fields.cover_url})`,
+                                    }}
+                                ></div>
                             </Link>
                         }
                     >
@@ -108,7 +116,16 @@ const CardEvent = ({ events }) => {
                     style={{ width: 550 }}
                     cover={
                         <Link key={i} to={`/event/${el.record.id}`}>
-                            <img alt="example" src={el.record.fields.cover_url} />{' '}
+                            {/* <img
+                                alt={el.record.fields.cover_alt}
+                                src={el.record.fields.cover_url}
+                            />{' '} */}
+                            <div
+                                className="img-event"
+                                style={{
+                                    backgroundImage: `url(${el.record.fields.cover_url})`,
+                                }}
+                            ></div>
                         </Link>
                     }
                 >

@@ -66,7 +66,7 @@ const Detail = () => {
         // Get default item in ls if he is not empty
         let ls = Api.getLs('favorites')
         if (!_.isEmpty(ls)) {
-            ls.map((el) => {
+            ls.forEach((el) => {
                 setEvID((evID) => [...evID, el.evID])
             })
         }
