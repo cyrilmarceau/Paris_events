@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
-import { Form, BackTop, Button, Empty, Pagination } from 'antd'
+import { Helmet } from 'react-helmet'
+
+import { Form, BackTop, Button, Empty } from 'antd'
 
 import { SearchOutlined } from '@ant-design/icons'
 
@@ -42,7 +44,6 @@ const Search = () => {
             let res
             if (!_.isEmpty(state.filters.search)) {
                 res = await Api.getEventBySearch(params)
-                console.log(res)
             }
 
             _.isEmpty(res.records)
@@ -73,6 +74,9 @@ const Search = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Favoris</title>
+            </Helmet>
             <h1 className="search-title">Faite une recherche sur les événements à Paris</h1>
             <Form
                 form={form}

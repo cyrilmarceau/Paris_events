@@ -82,7 +82,6 @@ const that = {
             return params
         },
         pagination(params, pagination) {
-            // console.log(pagination)
             // params.page = pagination.current || 1
             params.limit = pagination.pageSize
             params.offset = pagination.offset
@@ -93,7 +92,6 @@ const that = {
 
     convertDate(date, splitVal = '' || null, replaceBy = '', totalDate = false) {
         let res = new Date(date).toLocaleString()
-        console.log()
         if (splitVal !== null && totalDate === false) {
             // Get only the date
             res = res.split(splitVal)[0]

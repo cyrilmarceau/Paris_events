@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { Helmet } from 'react-helmet'
+
 import { BackTop, Empty } from 'antd'
 
 import _ from 'lodash'
@@ -8,15 +10,10 @@ import Api from '../api/api'
 
 import CardsEvent from '../components/CardEvent'
 
-import favoriteFields from '../fields/favorite.json'
-
 const Favorites = () => {
     const [state, setState] = useState({
         events: [],
-        fields: _.cloneDeep(favoriteFields),
     })
-
-    const [cat, setCat] = useState([])
 
     const getLocalStorage = () => {
         let ls = Api.getLs('favorites')
@@ -51,6 +48,9 @@ const Favorites = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Favoris</title>
+            </Helmet>
             {_.isEmpty(state.events) ? <Empty /> : <CardsEvent events={state.events} />}
 
             <BackTop />

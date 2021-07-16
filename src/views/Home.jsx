@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { Helmet } from 'react-helmet'
+
 import _ from 'lodash'
 
 import Api from '../api/api'
@@ -42,6 +44,11 @@ const Home = () => {
     }
     return (
         <>
+            <div className="application">
+                <Helmet>
+                    <title>Accueil</title>
+                </Helmet>
+            </div>
             <h1 className="home-title">Bienvenue sur le site de Paris event</h1>
             <CardsEvent events={state.events} />
         </>

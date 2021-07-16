@@ -11,8 +11,6 @@ import Detail from './views/Detail'
 
 import HeaderLayout from './components/layout/Header'
 
-import FooterLayout from './components/layout/Footer'
-
 const { Content } = Layout
 
 const App = () => {
@@ -29,7 +27,6 @@ const App = () => {
                         <Route path="/event/:id" component={Detail} />
                     </Switch>
                 </Content>
-                {/* <FooterLayout /> */}
             </Layout>
         </Router>
     )

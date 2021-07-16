@@ -1,9 +1,0 @@
-[
-    {
-        "type": "select",
-        "displayLabel": false,
-        "key": "category",
-        "label": "Catégorie",
-        "rules": [{ "required": false, "message": "Veuillez remplir le champ événement" }]
-    }
-]
