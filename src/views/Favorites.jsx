@@ -8,10 +8,15 @@ import Api from '../api/api'
 
 import CardsEvent from '../components/CardEvent'
 
+import favoriteFields from '../fields/favorite.json'
+
 const Favorites = () => {
     const [state, setState] = useState({
         events: [],
+        fields: _.cloneDeep(favoriteFields),
     })
+
+    const [cat, setCat] = useState([])
 
     const getLocalStorage = () => {
         let ls = Api.getLs('favorites')
@@ -20,13 +25,18 @@ const Favorites = () => {
 
         let record = []
 
+        let catLs = []
+
         if (!_.isNil(ls)) {
             ls.map((el, i) => {
                 let newFormat = { record: {} }
-                newFormat.record.id = el.evID
 
+                newFormat.record.id = el.evID
                 newFormat.record.fields = el
+
                 record.push(newFormat)
+
+                catLs.push(el.category.split('->')[0].trim())
             })
             newS.events = record
 

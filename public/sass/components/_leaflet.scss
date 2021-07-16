@@ -1,0 +1,13 @@
+.leaflet-container {
+    height: 300px;
+    width: 450px;
+
+    .leaflet-marker-icon {
+        border: none;
+        background-color: transparent;
+
+        svg {
+            color: darken(lightblue, 20%);
+        }
+    }
+}

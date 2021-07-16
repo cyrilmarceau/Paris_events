@@ -1,9 +1,9 @@
 [
     {
-        "type": "text",
+        "type": "select",
         "displayLabel": false,
-        "key": "search",
-        "label": "Nom de l'événement",
+        "key": "category",
+        "label": "Catégorie",
         "rules": [{ "required": false, "message": "Veuillez remplir le champ événement" }]
     }
 ]

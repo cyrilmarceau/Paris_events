@@ -1,6 +1,7 @@
 .event-container-title {
     margin-top: 35px;
     .event__title {
+        margin-bottom: 15px;
         h1 {
             font-size: 30px;
             font-weight: bold;
@@ -45,6 +46,18 @@
             font-weight: bold;
             margin-bottom: 0;
         }
+        .sub-title {
+            display: flex;
+            margin: 10px 0;
+            svg {
+                width: 15px;
+                margin-right: 10px;
+            }
+            span {
+                margin-right: 5px;
+                font-weight: bold;
+            }
+        }
     }
 
     .informations__price {
@@ -53,6 +66,12 @@
     .informations__to-go {
         .adress {
             margin-bottom: 0;
+        }
+    }
+
+    .more-informations {
+        .title {
+            margin-bottom: 15px;
         }
     }
 }
