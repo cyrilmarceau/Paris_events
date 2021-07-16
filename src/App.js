@@ -15,7 +15,7 @@ const { Content } = Layout
 
 const App = () => {
     return (
-        <Router>
+        <Router basename="/paris-event/">
             <Layout>
                 <HeaderLayout />
                 <Content style={{ padding: '0 50px' }}>
