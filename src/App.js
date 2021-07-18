@@ -18,7 +18,7 @@ const App = () => {
         <Router basename="/paris-event/">
             <Layout>
                 <HeaderLayout />
-                <Content style={{ padding: '0 50px' }}>
+                <Content>
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route path="/recherche" component={Search} />

@@ -1,3 +1,21 @@
 .ant-layout-content {
     min-height: calc(100vh - 64px);
 }
+
+@media (min-width: 320px) and (max-width: 400px) {
+    .ant-layout-content {
+        padding: 0px 15px;
+    }
+}
+
+@media (min-width: 401px) and (max-width: 575px) {
+    .ant-layout-content {
+        padding: 0px 30px;
+    }
+}
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+    .ant-layout-content {
+        padding: 0px 50px;
+    }
+}
